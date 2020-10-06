@@ -43,7 +43,7 @@ define rundeck::config::job(
     }
     ~> exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "curl -k -F xmlBatch=@${job_dir}/${job_filename} -H 'Application/yaml' ${rundeck::config::grails_server_url}/api/35/project/${project}/jobs/import?format=yaml&uuidOption=remove&dupeOption=update",
+      command => "curl -k -F xmlBatch=@${job_dir}/${job_filename} -H 'Application/yaml' ${rundeck::config::grails_server_url}/api/35/project/${project}/jobs/import'?format=yaml&uuidOption=remove&dupeOption=update'",
       refreshonly => true
     }
 
