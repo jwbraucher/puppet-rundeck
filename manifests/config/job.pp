@@ -28,6 +28,8 @@ define rundeck::config::job(
   Enum['present', 'absent'] $ensure = 'present',
 ) {
 
+  include rundeck::config
+
   $job_dir = "${rundeck::config::job_dir}"
   $job_filename = inline_template('<%= File.basename(@job_definition) %>')
 
