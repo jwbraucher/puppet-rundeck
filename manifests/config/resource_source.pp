@@ -328,21 +328,25 @@ define rundeck::config::resource_source(
         value   => bool2str($running_only),
         require => File[$properties_file],
       }
-      ini_setting { "${name}::resources.source.${number}.config.endpoint":
-        ensure  => present,
-        path    => $properties_file,
-        section => '',
-        setting => "resources.source.${number}.config.endpoint",
-        value   => $endpoint_url,
-        require => File[$properties_file],
+      if ($endpoint_url) {
+        ini_setting { "${name}::resources.source.${number}.config.endpoint":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.endpoint",
+          value   => $endpoint_url,
+          require => File[$properties_file],
+        }
       }
-      ini_setting { "${name}::resources.source.${number}.config.assumeRoleArn":
-        ensure  => present,
-        path    => $properties_file,
-        section => '',
-        setting => "resources.source.${number}.config.assumeRoleArn",
-        value   => $assume_role_arn,
-        require => File[$properties_file],
+      if ($assume_role_arn) {
+        ini_setting { "${name}::resources.source.${number}.config.assumeRoleArn":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.assumeRoleArn",
+          value   => $assume_role_arn,
+          require => File[$properties_file],
+        }
       }
       ini_setting { "${name}::resources.source.${number}.config.filter":
         ensure  => present,
