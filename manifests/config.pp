@@ -115,12 +115,10 @@ class rundeck::config {
   file { $rundeck::service_logs_dir:
     ensure  => directory,
   }
-  file { $job_dir:
-    ensure  => directory,
-  }
 
   ensure_resource(file, $projects_dir, {'ensure' => 'directory'})
   ensure_resource(file, $plugin_dir, {'ensure'   => 'directory'})
+  ensure_resource(file, $job_dir, {'ensure'   => 'directory'})
 
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
@@ -223,7 +221,6 @@ class rundeck::config {
 
   create_resources(rundeck::config::project, $projects)
   create_resources(rundeck::config::plugin, $plugins)
-  create_resources(rundeck::config::job, $jobs)
 
   if versioncmp( $package_ensure, '3.0.0' ) < 0 {
     class { 'rundeck::config::global::web':

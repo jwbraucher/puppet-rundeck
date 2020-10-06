@@ -313,5 +313,6 @@ class rundeck (
   Class['rundeck::install']
   -> Class['rundeck::config']
   ~> Class['rundeck::service']
+  -> create_resources(rundeck::config::job, $jobs)
 
 }
