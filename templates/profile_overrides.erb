@@ -19,6 +19,10 @@ RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.servlet.context-path=<%= @serve
 RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Djava.security.krb5.conf=$RDECK_CONFIG/krb5.conf"
 <%- end -%>
 
+<%- if @preauthenticated_config['enabled'] -%>
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.address=127.0.0.1"
+<%- end -%>
+
 <% if @java_home %>
 JAVA_HOME=<%= @java_home %>
 <% end %>
