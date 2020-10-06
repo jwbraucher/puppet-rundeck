@@ -63,6 +63,7 @@ class rundeck::config {
   $security_config                    = $rundeck::security_config
   $security_role                      = $rundeck::security_role
   $server_web_context                 = $rundeck::server_web_context
+  $server_web_context33               = $rundeck::server_web_context33
   $service_logs_dir                   = $rundeck::service_logs_dir
   $service_name                       = $rundeck::service_name
   $session_timeout                    = $rundeck::session_timeout
