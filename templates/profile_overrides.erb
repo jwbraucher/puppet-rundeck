@@ -20,7 +20,7 @@ RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Djava.security.krb5.conf=$RDECK_CONFIG/
 <%- end -%>
 
 <%- if @server_address -%>
-        RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.address=<% @server_address %>"
+        RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.address=<%= @server_address %>"
 <%- end -%>
 
 <% if @java_home %>
