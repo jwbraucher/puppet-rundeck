@@ -31,19 +31,19 @@ define rundeck::config::job(
   include rundeck
 
   $job_dir = '/etc/rundeck/jobs'
-  $job_filename = inline_template('<%= File.basename($job_definintion) %>')
+  $job_filename = inline_template('<%= File.basename(@job_definition) %>')
 
   if $ensure == 'present' {
 
     # create job
     file { "$title":
       ensure  => file,
-      path    => "${job_dir}/${job_filename}"
+      path    => "${job_dir}/${job_filename}",
       content => epp($job_definition),
     }
     ~> exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "curl -k -F xmlBatch=@${job_dir}/${job_filename} -H 'Application/yaml' ${rundeck::config::grails_server_url}/api/35/project/${project}/jobs/import?format=yaml&uuidOption=remove&dupeOption=update"
+      command => "curl -k -F xmlBatch=@${job_dir}/${job_filename} -H 'Application/yaml' ${rundeck::config::grails_server_url}/api/35/project/${project}/jobs/import?format=yaml&uuidOption=remove&dupeOption=update",
       refreshonly => true
     }
 
