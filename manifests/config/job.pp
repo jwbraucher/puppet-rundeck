@@ -39,7 +39,7 @@ define rundeck::config::job(
     file { "$title":
       ensure  => file,
       path    => "${job_dir}/${job_filename}",
-      content => epp($job_definition),
+      content => template($job_definition),
     }
     ~> exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
