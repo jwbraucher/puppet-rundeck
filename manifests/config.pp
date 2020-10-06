@@ -32,6 +32,7 @@ class rundeck::config {
   $group                              = $rundeck::group
   $gui_config                         = $rundeck::gui_config
   $java_home                          = $rundeck::java_home
+  $jobs                               = $rundeck::jobs
   $jvm_args                           = $rundeck::jvm_args
   $kerberos_realms                    = $rundeck::kerberos_realms
   $key_password                       = $rundeck::key_password
@@ -44,6 +45,7 @@ class rundeck::config {
   $manage_default_api_policy          = $rundeck::manage_default_api_policy
   $overrides_dir                      = $rundeck::overrides_dir
   $package_ensure                     = $rundeck::package_ensure
+  $plugins                            = $rundeck::plugins
   $preauthenticated_config            = $rundeck::preauthenticated_config
   $projects                           = $rundeck::projects
   $projects_description               = $rundeck::projects_description
@@ -214,6 +216,8 @@ class rundeck::config {
   }
 
   create_resources(rundeck::config::project, $projects)
+  create_resources(rundeck::config::plugin, $plugins)
+  create_resources(rundeck::config::job, $jobs)
 
   if versioncmp( $package_ensure, '3.0.0' ) < 0 {
     class { 'rundeck::config::global::web':
