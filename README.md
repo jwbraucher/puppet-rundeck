@@ -123,6 +123,15 @@ The installation directory for Rundeck.
 
 Web context path to use, such as "/rundeck". `http://host.domain:port/server_web_context`
 
+##### `server_web_context33`
+
+Web context path to use, such as "/rundeck". `http://host.domain:port/server_web_context`
+( Uses the new configuration syntax introduced in Rundeck 3.3+ )
+
+##### `server_address`
+
+The listen address for the Rundeck service.
+
 ##### `ssl_enabled`
 
 Enable ssl for the Rundeck web application.

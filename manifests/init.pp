@@ -154,6 +154,9 @@
 #  Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
 #  Syntax for Rundeck 3.3+
 #
+# [*server_address*]
+#  The listen address for the Rundeck service.
+#
 # [*service_logs_dir*]
 #  The path to the directory to store logs.
 #
@@ -278,6 +281,7 @@ class rundeck (
   String $security_role                                         = $rundeck::params::security_role,
   Optional[String] $server_web_context                          = undef,
   Optional[String] $server_web_context33                        = undef,
+  Optional[String] $server_address                              = undef,
   Optional[String] $service_config                              = undef,
   Stdlib::Absolutepath $service_logs_dir                        = $rundeck::params::service_logs_dir,
   String $service_name                                          = $rundeck::params::service_name,
