@@ -99,6 +99,7 @@ define rundeck::config::resource_source(
   String $filter_tag                                             = '',
   Stdlib::Port $http_proxy_port                                  = $rundeck::params::default_http_proxy_port,
   Integer $refresh_interval                                      = $rundeck::params::default_refresh_interval,
+  Integer $page_results                                          = $rundeck::params::default_page_results,
   Optional[String] $puppet_enterprise_host                       = undef,
   Optional[Stdlib::Port] $puppet_enterprise_port                 = undef,
   Optional[Stdlib::Absolutepath] $puppet_enterprise_ssl_dir      = undef,
@@ -370,6 +371,14 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.refreshInterval",
         value   => $refresh_interval,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.pageResults":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.pageResults",
+        value   => $page_results,
         require => File[$properties_file],
       }
     }
