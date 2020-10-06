@@ -93,6 +93,7 @@ class rundeck::config {
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
   $plugin_dir     = $framework_config['framework.libext.dir']
+  $job_dir        = "${rdeck_base}/jobs"
 
   File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
 
@@ -112,6 +113,9 @@ class rundeck::config {
 
 
   file { $rundeck::service_logs_dir:
+    ensure  => directory,
+  }
+  file { $job_dir:
     ensure  => directory,
   }
 
