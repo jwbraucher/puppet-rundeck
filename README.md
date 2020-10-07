@@ -90,6 +90,14 @@ Ensure the state of the rundeck package, either present, absent or a specific ve
 
 Ensure the state of the rundeck-cli package, either present, absent or a specific version
 
+##### `plugins`
+
+Hash of Rundeck plugins to install
+
+##### `jobs`
+
+Hash of Rundeck jobs to import
+
 ##### `auth_types`
 
 The method used to authenticate to Rundeck. Options: file, ldap,
@@ -126,11 +134,12 @@ The installation directory for Rundeck.
 ##### `server_web_context`
 
 Web context path to use, such as "/rundeck". `http://host.domain:port/server_web_context`
+( Use this for Rundeck versions < 3.3 )
 
 ##### `server_web_context33`
 
 Web context path to use, such as "/rundeck". `http://host.domain:port/server_web_context`
-( Uses the new configuration syntax introduced in Rundeck 3.3+ )
+( Use this for Rundeck versions > 3.3 )
 
 ##### `server_address`
 
@@ -237,7 +246,7 @@ Boolean value if set to true enables cluster mode
 
 ##### `grails_server_url`
 
-The url used in sending email notifications.
+The external url used to access Rundeck
 
 ##### `database_config`
 
@@ -312,6 +321,20 @@ Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 ##### `manage_home`
 
 Whether to create the `rundeck_home` directory. Defaults to true.
+
+##### `auth_config`
+
+A dictionary of various auth-related configuration, including the default admin password, ldap, and pam settings.
+
+##### `cli_server_url`
+
+The url that the Rundeck cli should use to connect to Rundeck. Defaults to the value of grails_server_url.
+
+A dictionary of various auth-related configuration, including the default admin password, ldap, and pam settings.
+##### `manage_cli_config`
+
+Whether to create the .rd/rd.conf file in the Rundeck user's home. Defaults to false.
+If set to true, admin credentials from auth_config will be used.
 
 ##### `keystorage_type`
 
