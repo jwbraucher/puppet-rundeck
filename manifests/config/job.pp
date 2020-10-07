@@ -48,8 +48,9 @@ define rundeck::config::job(
     }
     ~> exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project garmin-pay --file ${jobs_dir}/${job_filename}",
+      command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project ${project} --file ${jobs_dir}/${job_filename}",
       user => "${rundeck::user}",
+      environment => [ "HOME=${rundeck::rdeck_home}" ],
       refreshonly => true
     }
 
@@ -61,6 +62,11 @@ define rundeck::config::job(
       ensure  => absent,
       path    => "${jobs_dir}/${job_filename}"
     }
+    # ~> exec { "$title":
+    #   path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    #   command => "rd jobs purge --project ${project} <QUERY PARAMS>"
+    #   user => "${rundeck::user}",
+    #   refreshonly => true
 
   }
 
