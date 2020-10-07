@@ -112,6 +112,7 @@ class rundeck::config {
       content => @("END")
         export RD_INSECURE_SSL=true
         export RD_URL=${cli_server_url}
+        export RD_BYPASS_URL=${grails_server_url}
         export RD_USER=${auth_config['file']['admin_user']}
         export RD_PASSWORD=${auth_config['file']['admin_password']}
         | END

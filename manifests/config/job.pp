@@ -52,7 +52,7 @@ define rundeck::config::job(
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
       refreshonly => true,
-      tries => 90,
+      tries => 300,
       try_sleep => 1
     }
 
