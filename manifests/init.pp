@@ -26,6 +26,9 @@
 # [*grails_server_url*]
 #  Sets `grails.serverURL` so that Rundeck knows its external address.
 #
+# [*cli_server_url*]
+#  Sets server url for rundeck-cli
+#
 # [*repo_apt_key_id*]
 #
 # Key ID for the GPG key for the Debian package
@@ -236,6 +239,7 @@ class rundeck (
   Hash $file_keystorage_keys                                    = $rundeck::params::file_keystorage_keys,
   Hash $framework_config                                        = $rundeck::params::framework_config,
   Stdlib::HTTPUrl $grails_server_url                            = $rundeck::params::grails_server_url,
+  Stdlib::HTTPUrl $cli_server_url                               = $rundeck::params::cli_server_url,
   Hash $gui_config                                              = $rundeck::params::gui_config,
   Optional[Stdlib::Absolutepath] $java_home                     = undef,
   Hash $jobs                                                    = $rundeck::params::jobs,

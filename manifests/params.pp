@@ -265,6 +265,7 @@ class rundeck::params {
   $clustermode_enabled = false
 
   $grails_server_url = "http://${facts['networking']['fqdn']}:4440"
+  $cli_server_url = $grails_server_url
 
   $database_config = {
     'type'            => 'h2',
