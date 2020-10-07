@@ -330,7 +330,6 @@ A dictionary of various auth-related configuration, including the default admin 
 
 The url that the Rundeck cli should use to connect to Rundeck. Defaults to the value of grails_server_url.
 
-A dictionary of various auth-related configuration, including the default admin password, ldap, and pam settings.
 ##### `manage_cli_config`
 
 Whether to create the .rd/rd.conf file in the Rundeck user's home. Defaults to false.
