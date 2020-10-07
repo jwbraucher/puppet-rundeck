@@ -58,7 +58,7 @@ class rundeck::config {
   $rdeck_config_template              = $rundeck::rdeck_config_template
   $rdeck_home                         = $rundeck::rdeck_home
   $manage_home                        = $rundeck::manage_home
-  $manage_cli_config                  = $rundeck::manage_cli_config,
+  $manage_cli_config                  = $rundeck::manage_cli_config
   $rdeck_profile_template             = $rundeck::rdeck_profile_template
   $realm_template                     = $rundeck::realm_template
   $rss_enabled                        = $rundeck::rss_enabled
