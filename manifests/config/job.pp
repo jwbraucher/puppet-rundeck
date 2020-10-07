@@ -13,8 +13,10 @@
 #   The project to which the job should be added
 #
 # [*job_definition*]
-#   Path to template (erb) file containing the job definition in yaml
+#   Path to template (erb) file containing the job definition
 #
+# [*format*]
+#   Job definition format, must be yaml or xml (default is yaml)
 # === Examples
 #
 # Create a job:
@@ -27,12 +29,13 @@
 define rundeck::config::job(
   String $project,
   String $job_definition,
+  String $format = 'yaml',
   Enum['present', 'absent'] $ensure = 'present',
 ) {
 
   include rundeck::jobs
 
-  $job_dir = "${rundeck::jobs::jobs_dir}"
+  $jobs_dir = "${rundeck::jobs::jobs_dir}"
   $job_filename = inline_template('<%= File.basename(@job_definition) %>')
 
   if $ensure == 'present' {
@@ -40,12 +43,13 @@ define rundeck::config::job(
     # create job
     file { "$title":
       ensure  => file,
-      path    => "${job_dir}/${job_filename}",
+      path    => "${jobs_dir}/${job_filename}",
       content => template($job_definition),
     }
     ~> exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "curl -k -F xmlBatch=@${job_dir}/${job_filename} -H 'Application/yaml' ${rundeck::config::grails_server_url}/api/35/project/${project}/jobs/import'?format=yaml&uuidOption=remove&dupeOption=update'",
+      command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project garmin-pay --file ${jobs_dir}/${job_filename}",
+      user => "${rundeck::user}",
       refreshonly => true
     }
 
@@ -55,7 +59,7 @@ define rundeck::config::job(
     # delete job
     file { "$title":
       ensure  => absent,
-      path    => "${job_dir}/${job_filename}"
+      path    => "${jobs_dir}/${job_filename}"
     }
 
   }
