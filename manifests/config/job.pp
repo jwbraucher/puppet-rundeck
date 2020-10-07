@@ -51,7 +51,9 @@ define rundeck::config::job(
       command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project ${project} --file ${jobs_dir}/${job_filename}",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      refreshonly => true
+      refreshonly => true,
+      tries => 30,
+      try_sleep => 1
     }
 
   }
