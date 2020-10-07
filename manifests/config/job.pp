@@ -10,16 +10,18 @@
 #   Set present or absent to add or remove the job
 #
 # [*project*]
+#   The project to which the job should be added
 #
 # [*job_definition*]
+#   Path to template (erb) file containing the job definition in yaml
 #
 # === Examples
 #
 # Create a job:
 #
 # rundeck::config::job { 'my-job':
-#  name   => 'my-job'
-#  job_definition => '
+#  name   => 'my-job',
+#  job_definition => 'my_module/my_job.yaml'
 # }
 #
 define rundeck::config::job(

@@ -329,6 +329,7 @@ define rundeck::config::resource_source(
         value   => bool2str($running_only),
         require => File[$properties_file],
       }
+      # endpoint is an optional field that must be omitted if empty
       if ($endpoint_url) {
         ini_setting { "${name}::resources.source.${number}.config.endpoint":
           ensure  => present,
@@ -339,6 +340,7 @@ define rundeck::config::resource_source(
           require => File[$properties_file],
         }
       }
+      # assumeRoleArn is an optional field that must be omitted if empty
       if ($assume_role_arn) {
         ini_setting { "${name}::resources.source.${number}.config.assumeRoleArn":
           ensure  => present,
@@ -373,6 +375,7 @@ define rundeck::config::resource_source(
         value   => $refresh_interval,
         require => File[$properties_file],
       }
+      # pageResults is a required field and must be numeric
       ini_setting { "${name}::resources.source.${number}.config.pageResults":
         ensure  => present,
         path    => $properties_file,
