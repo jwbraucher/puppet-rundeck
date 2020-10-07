@@ -5,7 +5,7 @@ class rundeck::jobs {
   ensure_resource(file, $jobs_dir, {'ensure'   => 'directory'})
 
   # create jobs
-  create_resources(rundeck::config::job, $jobs)
+  create_resources(rundeck::config::job, $rundeck::jobs)
 
 }
 
