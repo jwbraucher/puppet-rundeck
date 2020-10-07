@@ -29,6 +29,7 @@ class rundeck::config {
   $vault_keystorage_approle_authmount = $rundeck::vault_keystorage_approle_authmount
   $vault_keystorage_authbackend       = $rundeck::vault_keystorage_authbackend
   $grails_server_url                  = $rundeck::grails_server_url
+  $cli_server_url                     = $rundeck::cli_server_url
   $group                              = $rundeck::group
   $gui_config                         = $rundeck::gui_config
   $java_home                          = $rundeck::java_home
@@ -57,6 +58,7 @@ class rundeck::config {
   $rdeck_config_template              = $rundeck::rdeck_config_template
   $rdeck_home                         = $rundeck::rdeck_home
   $manage_home                        = $rundeck::manage_home
+  $manage_cli_config                  = $rundeck::manage_cli_config,
   $rdeck_profile_template             = $rundeck::rdeck_profile_template
   $realm_template                     = $rundeck::realm_template
   $rss_enabled                        = $rundeck::rss_enabled
@@ -103,14 +105,16 @@ class rundeck::config {
     file{ "${rdeck_home}/.rd":
       ensure  => directory,
     }
-    file{ "${rdeck_home}/.rd/rd.conf":
-      ensure  => file,
-      content => @("END")
-        export RD_INSECURE_SSL=true
-        export RD_URL=${rundeck::cli_server_url}
-        export RD_USER=${auth_config['file']['admin_user']}
-        export RD_PASSWORD=${auth_config['file']['admin_password']}
-        | END
+    if $manage_cli_config {
+      file{ "${rdeck_home}/.rd/rd.conf":
+        ensure  => file,
+        content => @("END")
+          export RD_INSECURE_SSL=true
+          export RD_URL=${cli_server_url}
+          export RD_USER=${auth_config['file']['admin_user']}
+          export RD_PASSWORD=${auth_config['file']['admin_password']}
+          | END
+      }
     }
   } elsif ! defined_with_params(File[$rdeck_home], {'ensure' => 'directory' }) {
     fail('when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.')
