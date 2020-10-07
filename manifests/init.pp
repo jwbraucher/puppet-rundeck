@@ -313,10 +313,11 @@ class rundeck (
   contain rundeck::install
   contain rundeck::config
   contain rundeck::service
+  contain rundeck::jobs
 
   Class['rundeck::install']
   -> Class['rundeck::config']
   ~> Class['rundeck::service']
+  -> Class['rundeck::jobs']
 
-  create_resources(rundeck::config::job, $jobs)
 }

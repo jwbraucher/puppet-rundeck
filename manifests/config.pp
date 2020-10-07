@@ -93,7 +93,6 @@ class rundeck::config {
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
   $plugin_dir     = $framework_config['framework.libext.dir']
-  $job_dir        = "${rdeck_base}/jobs"
 
   File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
 
@@ -118,7 +117,6 @@ class rundeck::config {
 
   ensure_resource(file, $projects_dir, {'ensure' => 'directory'})
   ensure_resource(file, $plugin_dir, {'ensure'   => 'directory'})
-  ensure_resource(file, $job_dir, {'ensure'   => 'directory'})
 
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
