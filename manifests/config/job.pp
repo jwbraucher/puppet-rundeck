@@ -52,7 +52,7 @@ define rundeck::config::job(
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
       refreshonly => true,
-      tries => 30,
+      tries => 90,
       try_sleep => 1
     }
 
@@ -68,7 +68,10 @@ define rundeck::config::job(
     #   path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     #   command => "rd jobs purge --project ${project} <QUERY PARAMS>"
     #   user => "${rundeck::user}",
+    #   environment => [ "HOME=${rundeck::rdeck_home}" ],
     #   refreshonly => true
+    #   tries => 90,
+    #   try_sleep => 1
 
   }
 
