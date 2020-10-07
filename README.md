@@ -86,6 +86,10 @@ of rundeck on your system
 
 Ensure the state of the rundeck package, either present, absent or a specific version
 
+##### `cli_package_ensure`
+
+Ensure the state of the rundeck-cli package, either present, absent or a specific version
+
 ##### `auth_types`
 
 The method used to authenticate to Rundeck. Options: file, ldap,

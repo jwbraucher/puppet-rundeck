@@ -99,6 +99,9 @@
 # [*package_ensure*]
 #  Ensure the state of the rundeck package, either present, absent or a specific version
 #
+# [*cli_package_ensure*]
+#  Ensure the state of the rundeck-cli package, either present, absent or a specific version
+#
 # [*preauthenticated_config*]
 #  A hash of the rundeck preauthenticated config mode
 #
@@ -257,6 +260,7 @@ class rundeck (
   Boolean $manage_default_api_policy                            = $rundeck::params::manage_default_api_policy,
   Boolean $manage_repo                                          = $rundeck::params::manage_repo,
   String $package_ensure                                        = $rundeck::params::package_ensure,
+  String $cli_package_ensure                                    = $rundeck::params::cli_package_ensure,
   Hash $plugins                                                 = $rundeck::params::plugins,
   Hash $preauthenticated_config                                 = $rundeck::params::preauthenticated_config,
   Hash $projects                                                = $rundeck::params::projects,
