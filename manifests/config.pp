@@ -110,7 +110,7 @@ class rundeck::config {
         export RD_URL=${rundeck::cli_server_url}
         export RD_USER=${auth_config['file']['admin_user']}
         export RD_PASSWORD=${auth_config['file']['admin_password']}
-        END
+        | END
     }
   } elsif ! defined_with_params(File[$rdeck_home], {'ensure' => 'directory' }) {
     fail('when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.')
