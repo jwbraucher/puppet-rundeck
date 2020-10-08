@@ -29,9 +29,11 @@ class rundeck::config {
   $vault_keystorage_approle_authmount = $rundeck::vault_keystorage_approle_authmount
   $vault_keystorage_authbackend       = $rundeck::vault_keystorage_authbackend
   $grails_server_url                  = $rundeck::grails_server_url
+  $cli_server_url                     = $rundeck::cli_server_url
   $group                              = $rundeck::group
   $gui_config                         = $rundeck::gui_config
   $java_home                          = $rundeck::java_home
+  $jobs                               = $rundeck::jobs
   $jvm_args                           = $rundeck::jvm_args
   $kerberos_realms                    = $rundeck::kerberos_realms
   $key_password                       = $rundeck::key_password
@@ -44,6 +46,7 @@ class rundeck::config {
   $manage_default_api_policy          = $rundeck::manage_default_api_policy
   $overrides_dir                      = $rundeck::overrides_dir
   $package_ensure                     = $rundeck::package_ensure
+  $plugins                            = $rundeck::plugins
   $preauthenticated_config            = $rundeck::preauthenticated_config
   $projects                           = $rundeck::projects
   $projects_description               = $rundeck::projects_description
@@ -55,12 +58,15 @@ class rundeck::config {
   $rdeck_config_template              = $rundeck::rdeck_config_template
   $rdeck_home                         = $rundeck::rdeck_home
   $manage_home                        = $rundeck::manage_home
+  $manage_cli_config                  = $rundeck::manage_cli_config
   $rdeck_profile_template             = $rundeck::rdeck_profile_template
   $realm_template                     = $rundeck::realm_template
   $rss_enabled                        = $rundeck::rss_enabled
   $security_config                    = $rundeck::security_config
   $security_role                      = $rundeck::security_role
   $server_web_context                 = $rundeck::server_web_context
+  $server_web_context33               = $rundeck::server_web_context33
+  $server_address                     = $rundeck::server_address
   $service_logs_dir                   = $rundeck::service_logs_dir
   $service_name                       = $rundeck::service_name
   $session_timeout                    = $rundeck::session_timeout
@@ -95,6 +101,21 @@ class rundeck::config {
   if $manage_home {
     file{ $rdeck_home:
       ensure  => directory,
+    }
+  }
+  if $manage_cli_config {
+    file{ "${rdeck_home}/.rd":
+      ensure  => directory,
+    }
+    file{ "${rdeck_home}/.rd/rd.conf":
+      ensure  => file,
+      content => @("END")
+        export RD_INSECURE_SSL=true
+        export RD_URL=${cli_server_url}
+        export RD_BYPASS_URL=${grails_server_url}
+        export RD_USER=${auth_config['file']['admin_user']}
+        export RD_PASSWORD=${auth_config['file']['admin_password']}
+        | END
     }
   } elsif ! defined_with_params(File[$rdeck_home], {'ensure' => 'directory' }) {
     fail('when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.')
@@ -214,6 +235,7 @@ class rundeck::config {
   }
 
   create_resources(rundeck::config::project, $projects)
+  create_resources(rundeck::config::plugin, $plugins)
 
   if versioncmp( $package_ensure, '3.0.0' ) < 0 {
     class { 'rundeck::config::global::web':

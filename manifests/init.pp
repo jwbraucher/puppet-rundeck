@@ -26,6 +26,9 @@
 # [*grails_server_url*]
 #  Sets `grails.serverURL` so that Rundeck knows its external address.
 #
+# [*cli_server_url*]
+#  Sets server url for rundeck-cli
+#
 # [*repo_apt_key_id*]
 #
 # Key ID for the GPG key for the Debian package
@@ -99,6 +102,9 @@
 # [*package_ensure*]
 #  Ensure the state of the rundeck package, either present, absent or a specific version
 #
+# [*cli_package_ensure*]
+#  Ensure the state of the rundeck-cli package, either present, absent or a specific version
+#
 # [*preauthenticated_config*]
 #  A hash of the rundeck preauthenticated config mode
 #
@@ -149,6 +155,13 @@
 #
 # [*server_web_context*]
 #  Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+#
+# [*server_web_context33*]
+#  Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+#  Syntax for Rundeck 3.3+
+#
+# [*server_address*]
+#  The listen address for the Rundeck service.
 #
 # [*service_logs_dir*]
 #  The path to the directory to store logs.
@@ -226,8 +239,10 @@ class rundeck (
   Hash $file_keystorage_keys                                    = $rundeck::params::file_keystorage_keys,
   Hash $framework_config                                        = $rundeck::params::framework_config,
   Stdlib::HTTPUrl $grails_server_url                            = $rundeck::params::grails_server_url,
+  Stdlib::HTTPUrl $cli_server_url                               = $rundeck::params::cli_server_url,
   Hash $gui_config                                              = $rundeck::params::gui_config,
   Optional[Stdlib::Absolutepath] $java_home                     = undef,
+  Hash $jobs                                                    = $rundeck::params::jobs,
   String $jvm_args                                              = $rundeck::params::jvm_args,
   Hash $kerberos_realms                                         = $rundeck::params::kerberos_realms,
   String $key_password                                          = $rundeck::params::key_password,
@@ -249,6 +264,8 @@ class rundeck (
   Boolean $manage_default_api_policy                            = $rundeck::params::manage_default_api_policy,
   Boolean $manage_repo                                          = $rundeck::params::manage_repo,
   String $package_ensure                                        = $rundeck::params::package_ensure,
+  String $cli_package_ensure                                    = $rundeck::params::cli_package_ensure,
+  Hash $plugins                                                 = $rundeck::params::plugins,
   Hash $preauthenticated_config                                 = $rundeck::params::preauthenticated_config,
   Hash $projects                                                = $rundeck::params::projects,
   String $projects_description                                  = $rundeck::params::projects_default_desc,
@@ -260,6 +277,7 @@ class rundeck (
   String $rdeck_config_template                                 = $rundeck::params::rdeck_config_template,
   Stdlib::Absolutepath $rdeck_home                              = $rundeck::params::rdeck_home,
   Boolean $manage_home                                          = $rundeck::params::manage_home,
+  Boolean $manage_cli_config                                    = $rundeck::params::manage_cli_config,
   Optional[String] $rdeck_profile_template                      = undef,
   String $realm_template                                        = $rundeck::params::realm_template,
   Stdlib::HTTPUrl $repo_yum_source                              = $rundeck::params::repo_yum_source,
@@ -271,6 +289,8 @@ class rundeck (
   Hash $security_config                                         = $rundeck::params::security_config,
   String $security_role                                         = $rundeck::params::security_role,
   Optional[String] $server_web_context                          = undef,
+  Optional[String] $server_web_context33                        = undef,
+  Optional[String] $server_address                              = undef,
   Optional[String] $service_config                              = undef,
   Stdlib::Absolutepath $service_logs_dir                        = $rundeck::params::service_logs_dir,
   String $service_name                                          = $rundeck::params::service_name,
@@ -298,9 +318,11 @@ class rundeck (
   contain rundeck::install
   contain rundeck::config
   contain rundeck::service
+  contain rundeck::jobs
 
   Class['rundeck::install']
   -> Class['rundeck::config']
   ~> Class['rundeck::service']
+  -> Class['rundeck::jobs']
 
 }

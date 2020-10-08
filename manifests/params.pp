@@ -10,6 +10,7 @@
 class rundeck::params {
   $package_name = 'rundeck'
   $package_ensure = 'installed'
+  $cli_package_ensure = 'installed'
   $service_name = 'rundeckd'
   $manage_repo = true
   $repo_yum_source = 'http://dl.bintray.com/rundeck/rundeck-rpm/'
@@ -36,6 +37,7 @@ class rundeck::params {
   $rdeck_base = '/var/lib/rundeck'
   $rdeck_home = '/var/lib/rundeck'
   $manage_home = true
+  $manage_cli_config = false
   $service_logs_dir = '/var/log/rundeck'
 
   $framework_config = {
@@ -227,6 +229,9 @@ class rundeck::params {
     'apiCookieAccess'      => true,
   }
 
+  $plugins = {}
+  $jobs = {}
+
   $projects = {}
   $projects_default_org = ''
   $projects_default_desc = ''
@@ -243,6 +248,7 @@ class rundeck::params {
   $default_resource_dir = '/'
   $default_http_proxy_port = 80
   $default_refresh_interval = 30
+  $default_page_results = 100
 
   $script_args_quoted = true
   $script_interpreter = '/bin/bash'
@@ -260,6 +266,7 @@ class rundeck::params {
   $clustermode_enabled = false
 
   $grails_server_url = "http://${facts['networking']['fqdn']}:4440"
+  $cli_server_url = $grails_server_url
 
   $database_config = {
     'type'            => 'h2',
