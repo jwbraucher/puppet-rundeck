@@ -1,75 +1,75 @@
 {
-  "name": "fitpay-rundeck",
-  "version": "106.0.1",
-  "author": "Vox Pupuli",
-  "license": "MIT",
-  "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
-  "source": "https://github.com/voxpupuli/puppet-rundeck.git",
-  "project_page": "https://github.com/voxpupuli/puppet-rundeck",
-  "issues_url": "https://github.com/voxpupuli/puppet-rundeck/issues",
-  "tags": [
-    "orchestration",
-    "rundeck",
-    "voxpupuli"
-  ],
-  "operatingsystem_support": [
-    {
-      "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "6",
-        "7",
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "6",
-        "7",
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "9",
-        "10"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "16.04",
-        "18.04"
-      ]
-    }
-  ],
-  "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.25.0 < 7.0.0"
-    },
-    {
-      "name": "pltraining/dirtree",
-      "version_requirement": ">= 0.3.0 < 2.0.0"
-    },
-    {
-      "name": "puppetlabs/inifile",
-      "version_requirement": ">= 1.4.1 < 5.0.0"
-    },
-    {
-      "name": "puppet/archive",
-      "version_requirement": ">= 1.0.0 < 5.0.0"
-    },
-    {
-      "name": "puppetlabs/java_ks",
-      "version_requirement": ">= 1.3.1 < 4.0.0"
-    }
-  ],
-  "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": ">= 5.5.8 < 7.0.0"
-    }
-  ]
+    "name": "fitpay-rundeck",
+    "version": "106.1.0",
+    "author": "Vox Pupuli",
+    "license": "MIT",
+    "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
+    "source": "https://github.com/voxpupuli/puppet-rundeck.git",
+    "project_page": "https://github.com/voxpupuli/puppet-rundeck",
+    "issues_url": "https://github.com/voxpupuli/puppet-rundeck/issues",
+    "tags": [
+        "orchestration",
+        "rundeck",
+        "voxpupuli"
+    ],
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "RedHat",
+            "operatingsystemrelease": [
+                "6",
+                "7",
+                "8"
+            ]
+        },
+        {
+            "operatingsystem": "CentOS",
+            "operatingsystemrelease": [
+                "6",
+                "7",
+                "8"
+            ]
+        },
+        {
+            "operatingsystem": "Debian",
+            "operatingsystemrelease": [
+                "9",
+                "10"
+            ]
+        },
+        {
+            "operatingsystem": "Ubuntu",
+            "operatingsystemrelease": [
+                "16.04",
+                "18.04"
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "name": "puppetlabs/stdlib",
+            "version_requirement": ">= 4.25.0 < 7.0.0"
+        },
+        {
+            "name": "pltraining/dirtree",
+            "version_requirement": ">= 0.3.0 < 2.0.0"
+        },
+        {
+            "name": "puppetlabs/inifile",
+            "version_requirement": ">= 1.4.1 < 5.0.0"
+        },
+        {
+            "name": "puppet/archive",
+            "version_requirement": ">= 1.0.0 < 5.0.0"
+        },
+        {
+            "name": "puppetlabs/java_ks",
+            "version_requirement": ">= 1.3.1 < 4.0.0"
+        }
+    ],
+    "requirements": [
+        {
+            "name": "puppet",
+            "version_requirement": ">= 5.5.8 < 7.0.0"
+        }
+    ]
 }
