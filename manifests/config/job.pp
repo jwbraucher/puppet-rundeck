@@ -10,13 +10,20 @@
 #   Set present or absent to add or remove the job
 #
 # [*project*]
-#   The project to which the job should be added
-#
-# [*job_definition*]
-#   Path to template (erb) file containing the job definition
+#   The project where the job should be added or deleted
 #
 # [*format*]
-#   Job definition format, must be yaml or xml (default is yaml)
+#   When ensure=present, the job definition format. Must be yaml or xml (default is yaml)
+#
+# [*job_definition*]
+#   When ensure=present, path to template (erb) file containing the job definition
+#
+# [*title*]
+#   When ensure=absent, the name of the job to delete
+#
+# [*group*]
+#   When ensure=absent, the group of the job to delete
+#
 # === Examples
 #
 # Create a job:
@@ -30,6 +37,7 @@ define rundeck::config::job(
   String $project,
   String $job_definition,
   String $format = 'yaml',
+  String $group = '',
   Enum['present', 'absent'] $ensure = 'present',
 ) {
 
@@ -59,19 +67,15 @@ define rundeck::config::job(
   }
   elsif $ensure == 'absent' {
 
-    # delete job
-    file { "$title":
-      ensure  => absent,
-      path    => "${jobs_dir}/${job_filename}"
+    exec { "$title":
+      path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+      command => "rd jobs purge --confirm --project ${project} --jobxact ${title} --groupxact ${group}"
+      user => "${rundeck::user}",
+      environment => [ "HOME=${rundeck::rdeck_home}" ],
+      refreshonly => true
+      tries => 90,
+      try_sleep => 1
     }
-    # ~> exec { "$title":
-    #   path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    #   command => "rd jobs purge --project ${project} <QUERY PARAMS>"
-    #   user => "${rundeck::user}",
-    #   environment => [ "HOME=${rundeck::rdeck_home}" ],
-    #   refreshonly => true
-    #   tries => 90,
-    #   try_sleep => 1
 
   }
 
