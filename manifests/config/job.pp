@@ -69,10 +69,10 @@ define rundeck::config::job(
 
     exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "rd jobs purge --confirm --project ${project} --jobxact ${title} --groupxact ${group}"
+      command => "rd jobs purge --confirm --project ${project} --jobxact ${title} --groupxact ${group}",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      refreshonly => true
+      refreshonly => true,
       tries => 90,
       try_sleep => 1
     }
