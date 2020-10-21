@@ -16,13 +16,13 @@
 #   When ensure=present, the job definition format. Must be yaml or xml (default is yaml)
 #
 # [*job_definition*]
-#   When ensure=present, path to template (erb) file containing the job definition
+#   Required when ensure=present. The path to the template (erb) file containing the job definition
 #
 # [*title*]
-#   When ensure=absent, the name of the job to delete
+#   The name of the job to add or delete
 #
 # [*group*]
-#   When ensure=absent, the group of the job to delete
+#   The group of the job to add or delete (defautls to an empty string, which means the root group)
 #
 # === Examples
 #
@@ -54,14 +54,14 @@ define rundeck::config::job(
       path    => "${jobs_dir}/${job_filename}",
       content => template($job_definition),
     }
-    ~> exec { "$title":
+    -> exec { "$title":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
       command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project ${project} --file ${jobs_dir}/${job_filename}",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      refreshonly => true,
       tries => 300,
-      try_sleep => 1
+      try_sleep => 1,
+      onlyif => "rd jobs list --project ${project} --groupxact ${group} --jobxact ${title} | grep -q '0 Jobs'"
     }
 
   }
@@ -72,9 +72,9 @@ define rundeck::config::job(
       command => "rd jobs purge --confirm --project ${project} --jobxact ${title} --groupxact ${group}",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      refreshonly => true,
       tries => 90,
-      try_sleep => 1
+      try_sleep => 1,
+      onlyif => "rd jobs list --project ${project} --groupxact ${group} --jobxact ${title} | grep -q '1 Jobs'"
     }
 
   }
