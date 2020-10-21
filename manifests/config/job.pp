@@ -35,7 +35,7 @@
 #
 define rundeck::config::job(
   String $project,
-  String $job_definition,
+  String $job_definition = '',
   String $format = 'yaml',
   String $group = '',
   Enum['present', 'absent'] $ensure = 'present',
