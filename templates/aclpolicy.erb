@@ -21,7 +21,7 @@ for:
   <%- end -%>
   <%- end -%>
 <%- end -%>
-<%- if (policy['by'].try(:length) || 0) > 0 -%>
+<%- if policy.key?('by') -%>
 by:
 <%- policy['by'].each do |by| -%>
 <%-   if !by['group'].nil? && by['group'] != :undef -%>
@@ -38,7 +38,7 @@ by:
 <%-   end -%>
 <%- end -%>
 <%- end -%>
-<%- if (policy['notBy'].try(:length) || 0) > 0 -%>
+<%- if policy.key?('notBy') -%>
 notBy:
 <%- policy['notBy'].each do |notBy| -%>
 <%-   if !notBy['group'].nil? && notBy['group'] != :undef -%>
