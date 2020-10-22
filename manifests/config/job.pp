@@ -61,7 +61,7 @@ define rundeck::config::job(
 
   # wait for the rundeck service to respond to cli commands before configuring jobs
   # (for rundeck service restarts, retry for up to 180 seconds while the service is starting)
-  exec { "${group}-${job_name}":
+  exec { "wait-${group}-${job_name}":
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     command => "rd system info",
     user => "${rundeck::user}",
