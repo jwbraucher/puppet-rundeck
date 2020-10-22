@@ -26,7 +26,7 @@
 #   (defaults to $title)
 #
 # [*group*]
-#   The group of the job to add or delete (defautls to an empty string, which means the root group)
+#   The group of the job to add or delete (defaults to '-', which means the job is at the top-level)
 #
 # === Examples
 #
@@ -50,7 +50,7 @@ define rundeck::config::job(
   String $project,
   String $job_definition = '',
   String $format = 'yaml',
-  String $group = '',
+  String $group = '-',
   Enum['present', 'absent'] $ensure = 'present',
 ) {
 
