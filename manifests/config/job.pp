@@ -62,12 +62,12 @@ define rundeck::config::job(
   if $ensure == 'present' {
 
     # create job
-    file { "$job_name":
+    file { "${group}-${job_name}":
       ensure  => file,
       path    => "${jobs_dir}/${job_filename}",
       content => template($job_definition),
     }
-    -> exec { "$job_name":
+    -> exec { "${group}-${job_name}":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
       command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project ${project} --file ${jobs_dir}/${job_filename}",
       user => "${rundeck::user}",
@@ -80,7 +80,7 @@ define rundeck::config::job(
   }
   elsif $ensure == 'absent' {
 
-    exec { "$job_name":
+    exec { "${group}-${job_name}":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
       command => "rd jobs purge --confirm --project ${project} --jobxact ${job_name} --groupxact ${group}",
       user => "${rundeck::user}",
