@@ -59,6 +59,18 @@ define rundeck::config::job(
   $jobs_dir = "${rundeck::jobs::jobs_dir}"
   $job_filename = inline_template('<%= File.basename(@job_definition) %>')
 
+  # wait for the rundeck service to respond to cli commands before configuring jobs
+  # (for rundeck service restarts, retry for up to 180 seconds while the service is starting)
+  exec { "${group}-${job_name}":
+    path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    command => "rd system info",
+    user => "${rundeck::user}",
+    environment => [ "HOME=${rundeck::rdeck_home}" ],
+    tries => 180,
+    try_sleep => 1,
+    before => Exec["${group}-${job_name}"]
+  }
+
   if $ensure == 'present' {
 
     # create job
@@ -72,8 +84,6 @@ define rundeck::config::job(
       command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project ${project} --file ${jobs_dir}/${job_filename}",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      tries => 300,
-      try_sleep => 1,
       onlyif => "rd jobs list --project ${project} --groupxact ${group} --jobxact ${job_name} | grep -q '0 Jobs'"
     }
 
@@ -85,8 +95,6 @@ define rundeck::config::job(
       command => "rd jobs purge --confirm --project ${project} --jobxact ${job_name} --groupxact ${group}",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      tries => 90,
-      try_sleep => 1,
       onlyif => "rd jobs list --project ${project} --groupxact ${group} --jobxact ${job_name} | grep -q '1 Jobs'"
     }
 
