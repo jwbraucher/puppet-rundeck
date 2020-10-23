@@ -68,6 +68,8 @@ define rundeck::config::job(
     environment => [ "HOME=${rundeck::rdeck_home}" ],
     tries => 180,
     try_sleep => 1,
+    refreshonly => true,
+    subscribe => Service["$rundeck::params::service_name"],
     before => Exec["${group}-${job_name}"]
   }
 
