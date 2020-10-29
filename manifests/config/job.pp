@@ -68,6 +68,8 @@ define rundeck::config::job(
     environment => [ "HOME=${rundeck::rdeck_home}" ],
     tries => 180,
     try_sleep => 1,
+    refreshonly => true,
+    subscribe => Service["$rundeck::params::service_name"],
     before => Exec["${group}-${job_name}"]
   }
 
@@ -81,10 +83,10 @@ define rundeck::config::job(
     }
     -> exec { "${group}-${job_name}":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "rd jobs load --remove-uuids --duplicate update --format ${format} --project ${project} --file ${jobs_dir}/${job_filename}",
+      command => "rd jobs load --remove-uuids --duplicate update --format \"${format}\" --project \"${project}\" --file \"${jobs_dir}/${job_filename}\"",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      onlyif => "rd jobs list --project ${project} --groupxact ${group} --jobxact ${job_name} | grep -q '0 Jobs'"
+      onlyif => "rd jobs list --project ${project} --groupxact \"${group}\" --jobxact \"${job_name}\" | grep -q '0 Jobs'"
     }
 
   }
@@ -92,10 +94,10 @@ define rundeck::config::job(
 
     exec { "${group}-${job_name}":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      command => "rd jobs purge --confirm --project ${project} --jobxact ${job_name} --groupxact ${group}",
+      command => "rd jobs purge --confirm --project \"${project}\" --jobxact \"${job_name}\" --groupxact \"${group}\"",
       user => "${rundeck::user}",
       environment => [ "HOME=${rundeck::rdeck_home}" ],
-      onlyif => "rd jobs list --project ${project} --groupxact ${group} --jobxact ${job_name} | grep -q '1 Jobs'"
+      onlyif => "rd jobs list --project \"${project}\" --groupxact \"${group}\" --jobxact \"${job_name}\" | grep -q '1 Jobs'"
     }
 
   }
