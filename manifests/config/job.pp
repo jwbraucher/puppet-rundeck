@@ -81,12 +81,11 @@ define rundeck::config::job(
       path    => "${jobs_dir}/${job_filename}",
       content => template($job_definition),
     }
-    -> exec { "${group}-${job_name}":
+    ~> exec { "${group}-${job_name}":
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
       command => "rd jobs load --remove-uuids --duplicate update --format \"${format}\" --project \"${project}\" --file \"${jobs_dir}/${job_filename}\"",
       user => "${rundeck::user}",
-      environment => [ "HOME=${rundeck::rdeck_home}" ],
-      onlyif => "rd jobs list --project ${project} --groupxact \"${group}\" --jobxact \"${job_name}\" | grep -q '0 Jobs'"
+      environment => [ "HOME=${rundeck::rdeck_home}" ]
     }
 
   }
