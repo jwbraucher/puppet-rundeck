@@ -68,14 +68,8 @@ class rundeck::install {
         }
       }
 
-<<<<<<< HEAD
-      ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
-      ensure_packages(['rundeck-cli'], {'ensure' => $cli_package_ensure } )
-||||||| 523a03c
-      ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
-=======
-      ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'] })
->>>>>>> upstream/master
+      ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+      ensure_packages(['rundeck-cli'], { 'ensure' => $cli_package_ensure } )
     }
     'Debian': {
       if $manage_repo {
