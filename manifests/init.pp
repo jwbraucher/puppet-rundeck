@@ -312,7 +312,6 @@ class rundeck (
   Array $security_roles_array                                   = $rundeck::params::security_roles_array,
   Hash[String,String] $storage_encrypt_config                   = {},
 ) inherits rundeck::params {
-
   validate_rd_policy($acl_policies)
 
   contain rundeck::install
@@ -323,6 +322,11 @@ class rundeck (
   Class['rundeck::install']
   -> Class['rundeck::config']
   ~> Class['rundeck::service']
+<<<<<<< HEAD
   -> Class['rundeck::jobs']
 
+||||||| 523a03c
+
+=======
+>>>>>>> upstream/master
 }

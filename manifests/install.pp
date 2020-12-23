@@ -7,7 +7,6 @@
 # This private class installs the rundeck package and its dependencies
 #
 class rundeck::install {
-
   assert_private()
 
   $manage_repo        = $rundeck::manage_repo
@@ -69,8 +68,14 @@ class rundeck::install {
         }
       }
 
+<<<<<<< HEAD
       ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
       ensure_packages(['rundeck-cli'], {'ensure' => $cli_package_ensure } )
+||||||| 523a03c
+      ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+=======
+      ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'] })
+>>>>>>> upstream/master
     }
     'Debian': {
       if $manage_repo {
@@ -86,7 +91,7 @@ class rundeck::install {
           before   => Package['rundeck'],
         }
       }
-      ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] } )
+      ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] })
     }
     default: {
       err("The osfamily: ${facts['os']['family']} is not supported")
