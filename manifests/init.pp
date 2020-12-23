@@ -322,11 +322,6 @@ class rundeck (
   Class['rundeck::install']
   -> Class['rundeck::config']
   ~> Class['rundeck::service']
-<<<<<<< HEAD
   -> Class['rundeck::jobs']
 
-||||||| 523a03c
-
-=======
->>>>>>> upstream/master
 }
